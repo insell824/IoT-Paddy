@@ -1,0 +1,30 @@
+{
+  "name": "iot-paddy",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000I\u0000o\u0000T\u0000-\u0000P\u0000a\u0000d\u0000d\u0000y\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insell824/IoT-Paddy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/insell824/IoT-Paddy/issues"
+  },
+  "homepage": "https://github.com/insell824/IoT-Paddy#readme",
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "date-utils": "^1.2.21",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.18.6"
+  }
+}
