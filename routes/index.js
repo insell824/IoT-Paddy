@@ -29,9 +29,13 @@ router.get('/client', function(req,res, nexr){
 });
 
 router.post('/client', function(req,res, next){
-  
-  console.log("HERE:");
-  console.log(JSON.stringify(req.body));
+  var io = require('socket.io-client');
+  var socket = io(req.protocol + '://' + req.headers.host);
+  socket.on('connect', function () {
+    socket.emit("sendMessageToServer", {value:JSON.stringify(req.body)});
+  });
+  //console.log("HERE:");
+  //console.log(JSON.stringify(req.body));
   res.send('OK');
 });
 
