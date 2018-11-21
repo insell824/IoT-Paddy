@@ -28,7 +28,7 @@ router.get('/client', function(req,res, nexr){
 });
 
 router.post('/client', function(req,res, nexr){
-  console.Clog(req.body);
+  console.log(req);
   res.send('OK');
 });
 
