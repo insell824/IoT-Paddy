@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
-  res.render('test', { title: 'Express', hostUrl:(req.protocol + '://' + req.headers.host) });
+  res.render('test', { title: 'Express', hostUrl:(req.headers['x-forwarded-proto'] + '://' + req.headers.host) });
 });
 
 router.get('/console', function(req, res, next) {
@@ -21,7 +21,7 @@ router.get('/console', function(req, res, next) {
 
 router.get('/client', function(req,res, nexr){
   var io = require('socket.io-client');
-  var socket = io(req.protocol + '://' + req.headers.host);
+  var socket = io(req.headers['x-forwarded-proto'] + '://' + req.headers.host);
   socket.on('connect', function () {
     socket.emit("sendMessageToServer", {value:'send message.'});
   });
@@ -30,7 +30,7 @@ router.get('/client', function(req,res, nexr){
 
 router.post('/client', function(req,res, next){
   var io = require('socket.io-client');
-  var socket = io(req.protocol + '://' + req.headers.host);
+  var socket = io(req.headers['x-forwarded-proto'] + '://' + req.headers.host);
   socket.on('connect', function () {
     socket.emit("sendMessageToServer", {value:JSON.stringify(req.body)});
   });
