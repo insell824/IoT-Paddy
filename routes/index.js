@@ -18,4 +18,18 @@ router.get('/console', function(req, res, next) {
   res.render('root/console', { title: 'Express', contents:req.headers.host });
 });
 
+router.get('/client', function(req,res, nexr){
+  var io = require('socket.io-client');
+  var socket = io(req.protocol + '://' + req.headers.host);
+  socket.on('connect', function () {
+    socket.emit("sendMessageToServer", {value:'send message.'});
+  });
+  res.render('root/sample');
+});
+
+router.post('/client', function(req,res, nexr){
+  console.Clog(req.body);
+  res.send('OK');
+});
+
 module.exports = router;
