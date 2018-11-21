@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var appenv = require('./lib/common/app-env');
-
+const bodyParser = require('body-parser')
+express().use(bodyParser.urlencoded({ extended: true }))
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -27,8 +28,10 @@ router.get('/client', function(req,res, nexr){
   res.render('root/sample');
 });
 
-router.post('/client', function(req,res, nexr){
-  console.log(req);
+router.post('/client', function(req,res, next){
+  
+  console.log("HERE:");
+  console.log(JSON.stringify(req.body));
   res.send('OK');
 });
 
