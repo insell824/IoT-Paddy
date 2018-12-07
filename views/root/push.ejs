@@ -1,0 +1,69 @@
+<!DOCTYPE html> 
+<html>
+<head>
+  <title>通知送信</title>
+  <script type="text/javascript" src="/javascripts/jquery-3.2.1.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  #noticeButton{
+    line-height:100px;
+  }
+
+  .button{
+    min-width:100px;
+    min-height:100px;
+    display: inline-block;
+    background-color:#999;
+    color:#fff;
+    text-align:center;
+    border-radius:3px;
+    box-shadow:0 0 2px #333;
+    cursor:pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+  .button:hover{
+    box-shadow:0 0 6px #333;
+  }
+  
+  </style>
+</head>
+<body>
+  <h1>通知送信</h1>
+  <div id="noticeButton" class="button">通知</div>
+  <div id="history-area">
+
+
+  </div>
+  
+  <script type="text/javascript">
+
+  //接続先の指定  
+  var url = "<%=hostUrl%>";
+
+  //接続
+  var socket = io.connect();   
+
+  //ボタンクリック時に、メッセージ送信
+  $("#noticeButton").click(function(){
+    var obj = {
+      type:"manual-notice",
+      obj : {},
+      val : null,
+      console:null
+    };
+    socket.emit("sendToServer",obj);
+  });
+  $(function(){
+    socket.emit("requireObjListOfServer");
+  });
+  socket.on("sendObjListToClient", function (data) {
+    console.log(data);
+  });
+  </script>
+</body>
+
+</html>

@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('paddy:server');
 var http = require('http');
-
+var myaws = require("../awssns.js");
 /**
  * Get port from environment and store in Express.
  */
@@ -94,22 +94,44 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
+var objList =[{"a":"TEST"},{"b":"TEST2"}];
 
 
 //クライアント接続があると、以下の処理をさせる。
 io.on('connection', function (socket) {
+  socket.on("requireObjListOfServer", function (data) {
+    // objListの要求
+    io.emit("sendObjListToClient", objList);
+  });
+
+  socket.on("newSigfoxObj", function (data) {
+    // Sigfoxからのメッセージが届く
+    objList.push(data);
+  });
 
   //接続通知をクライアントに送信
-  io.emit("sendMessageToClient", {value:"1人入室しました。"});
+  //io.emit("sendMessageToClient", {value:"1人入室しました。"});
 
   //クライアントからの受信イベントを設定
   socket.on("sendMessageToServer", function (data) {
       io.emit("sendMessageToClient", {value:data.value});
       console.log(data.value);
+      if(data.value == "NN"){
+        
+      }
   });     
 
   //接続切れイベントを設定
   socket.on("disconnect", function () {
-      io.emit("sendMessageToClient", {value:"1人退室しました。"});
+      //io.emit("sendMessageToClient", {value:"1人退室しました。"});
+  });
+
+  socket.on("sendToServer",function (obj){
+    if(obj == null){
+      return;
+    }
+    if(obj.type == "manual-notice"){
+      myaws.sendMessage();
+    }
   });
 });
