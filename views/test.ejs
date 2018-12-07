@@ -17,7 +17,7 @@
 var url = "<%=hostUrl%>";
 
 //接続
-var socket = io.connect(url);   
+var socket = io.connect();   
 
 //サーバから受け取るイベントを作成
 socket.on("sendMessageToClient", function (data) {

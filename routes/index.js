@@ -21,7 +21,7 @@ router.get('/console', function(req, res, next) {
 
 router.get('/client', function(req,res, nexr){
   var io = require('socket.io-client');
-  var socket = io(req.headers['x-forwarded-proto'] + '://' + req.headers.host);
+  var socket = io(process.env.URL || "http://localhost:3000");
   socket.on('connect', function () {
     socket.emit("sendMessageToServer", {value:'send message.'});
   });
@@ -30,7 +30,7 @@ router.get('/client', function(req,res, nexr){
 
 router.post('/client', function(req,res, next){
   var io = require('socket.io-client');
-  var socket = io(req.headers['x-forwarded-proto'] + '://' + req.headers.host);
+  var socket = io(process.env.URL || "http://localhost:3000");
   socket.on('connect', function () {
     socket.emit("sendMessageToServer", {value:JSON.stringify(req.body)});
   });
