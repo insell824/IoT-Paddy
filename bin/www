@@ -105,6 +105,49 @@ io.on('connection', function (socket) {
   //クライアントからの受信イベントを設定
   socket.on("sendMessageToServer", function (data) {
       io.emit("sendMessageToClient", {value:data.value});
+      if(data.value == "l"){
+        var AWS = require('aws-sdk')
+        //AWS.config.loadFromPath('./aws.json');
+
+        var configs;
+        var fs = require('fs');
+        fs.access('./aws.json', function (err) {
+          if(null){
+            consfigs = require("./aws.json");
+          }else{
+            consfigs = {
+              "accessKeyId":process.env.accessKeyId,
+              "secretAccessKey":process.env.secretAccessKey
+            }
+          }
+        });
+        AWS.config.update({region: 'us-west-2',"accessKeyId":configs.accessKeyId,"secretAccessKey":configs.secretAccessKey});
+
+        // Create publish parameters
+        var params = {
+          //TopicArn: 'arn:aws:sns:us-west-2:596041488651:sigfox-test',
+          PhoneNumber: '+81-80-1981-9098',
+          //"subject": "水田状況のお知らせ",
+          Message: "田んぼの様子が変わりました．\n専用端末かWebから確認できます．\nhttp://iot-paddy.herokuapp.com"
+        };
+
+        // Create promise and SNS service object
+        var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+
+        // Handle promise's fulfilled/rejected states
+        publishTextPromise.then(
+          function(data) {
+            console.log(`Message ${params.Message} send sent to the topic ${params.TopicArn}`);
+            console.log("MessageID is " + data.MessageId);
+          }).catch(
+            function(err) {
+            console.error(err, err.stack);
+          });
+
+          
+
+
+      }
   });     
 
   //接続切れイベントを設定
