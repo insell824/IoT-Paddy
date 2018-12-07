@@ -107,6 +107,10 @@ io.on('connection', function (socket) {
   socket.on("newSigfoxObj", function (data) {
     // Sigfoxからのメッセージが届く
     objList.push(data);
+    const amount = 50;
+    if(objList.length > amount){
+      array.splice(0, objList.length-amount);
+    }
   });
 
   //接続通知をクライアントに送信
