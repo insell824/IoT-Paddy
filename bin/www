@@ -94,7 +94,18 @@ function onListening() {
   debug('Listening on ' + bind);
 }
 
-var objList =[{"a":"TEST"},{"b":"TEST2"}];
+var objList =[
+  {
+    data: "8d061001965d0a008d5eec00",
+    device: "75BE75",
+    rssi: "-106.00",
+    station: "5130",
+    temp: "272",
+    time: "1544213420",
+    waterlevel: "10",
+    watertemp: "236"
+  }
+];
 
 
 //クライアント接続があると、以下の処理をさせる。
@@ -111,6 +122,7 @@ io.on('connection', function (socket) {
     if(objList.length > amount){
       array.splice(0, objList.length-amount);
     }
+    io.emit("newSigfoxObjToClient", data);
   });
 
   //接続通知をクライアントに送信
