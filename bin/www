@@ -112,10 +112,10 @@ io.on('connection', function (socket) {
         var configs;
         var fs = require('fs');
         fs.access('../aws.json', function (err) {
-          if(null){
-            consfigs = require("../aws.json");
+          if(err == null){
+            configs = require("../aws.json");
           }else{
-            consfigs = {
+            configs = {
               "accessKeyId":process.env.accessKeyId,
               "secretAccessKey":process.env.secretAccessKey
             }

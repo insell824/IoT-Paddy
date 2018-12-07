@@ -1,30 +1,28 @@
-// // Load the AWS SDK for Node.js
 
 var AWS = require('aws-sdk')
-//AWS.config.loadFromPath('./aws.json');
+AWS.config.loadFromPath('./aws.json');
 
 var configs;
-var fs = require('fs');
-fs.access('./aws.json', function (err) {
-  if(null){
-    consfigs = require("./aws.json");
-  }else{
-    consfigs = {
-      "accessKeyId":process.env.accessKeyId,
-      "secretAccessKey":process.env.secretAccessKey
-    }
-  }
-});
-
-
-AWS.config.update({region: 'us-west-2',"accessKeyId":configs.accessKeyId,"secretAccessKey":configs.secretAccessKey});
-
-
+//configs = require("./aws.json");
+//var fs = require('fs');
+// fs.access('./aws.json', function (err) {
+  
+//   if(err===null){
+//     console.log("W");
+//     configs = require("./aws.json");
+//   }else{
+//     configs = {
+//       "accessKeyId":process.env.accessKeyId,
+//       "secretAccessKey":process.env.secretAccessKey
+//     }
+//   }
+// });
+AWS.config.update({region: 'us-west-2'});
 
 // Create publish parameters
 var params = {
   //TopicArn: 'arn:aws:sns:us-west-2:596041488651:sigfox-test',
-  PhoneNumber: '+81-80-1981-9098',
+  PhoneNumber: '+81-90-5308-4505',
   //"subject": "水田状況のお知らせ",
   Message: "田んぼの様子が変わりました．\n専用端末かWebから確認できます．\nhttp://iot-paddy.herokuapp.com"
 };
@@ -44,44 +42,3 @@ publishTextPromise.then(
 
   
 
-
-
-  function send_sns_handler (event, context)
-  {
-      console.error ("*** end_sns_handler *** start ***")
-      
-      var sns = new aws.SNS({
-          apiVersion: '2010-03-31',
-          region: 'us-west-2',
-      })
-  
-  
-      sns.publish({
-          Message: event.body,
-          Subject: event.subject,
-          TopicArn: event.topic
-          }, function(err, data){
-          if ( err )
-              {
-              console.error ("*** end_sns_handler *** error ***")
-              //context.fail('fail')
-              console.log(err);
-              }
-      })  
-  }
-  
-  // // ---------------------------------------------------------------
-  // console.error ("*** 開始 ***")
-  
-  // const event = {
-  //     "topic": 'arn:aws:sns:us-west-2:596041488651:sigfox-test',
-  //     "subject": "This is the subject of the message. Dec/08/2017",
-  //     "body": "This is the body of the message. Dec/08/2017 PM 13:29"
-  // }
-  
-  // var context=""
-  
-  // send_sns_handler(event,context)
-  
-  // console.error ("*** 終了 ***")
-  // // ---------------------------------------------------------------
