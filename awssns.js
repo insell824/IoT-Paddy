@@ -1,6 +1,21 @@
 var AWS = require('aws-sdk');
-AWS.config.loadFromPath('./aws.json');
-AWS.config.update({region: 'us-east-1'});
+const fs = require('fs');
+const region_ = "us-east-1";
+try {
+  fs.statSync('./aws.json');
+  AWS.config.loadFromPath('./aws.json');
+  AWS.config.update({region: region_});
+} catch (error) {
+  if (error.code === 'ENOENT') {
+    AWS.config.update({region: region_ ,accessKeyId:process.env.accessKeyId,secretAccessKey:process.env.secretAccessKey});
+  } else {
+    console.log(error);
+  }
+}
+
+
+
+
 
 const sendMessage = function (msg=null){
   var params = {
