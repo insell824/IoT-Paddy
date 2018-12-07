@@ -122,7 +122,7 @@ var objList =[
 io.on('connection', function (socket) {
   socket.on("requireObjListOfServer", function (data) {
     // objListの要求
-    io.emit("sendObjListToClient", objList);
+    io.to(socket.id).emit("sendObjListToClient", objList); // 送信元へ
   });
 
   socket.on("newSigfoxObj", function (data) {
