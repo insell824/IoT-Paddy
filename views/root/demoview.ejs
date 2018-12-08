@@ -519,7 +519,24 @@ $(function(){
     $("#temp").text(m.temp/10+"度");
     $("#wtemp").text(m.watertemp/10+"度");
   });
+  socket.on("newSigfoxObjToClient",function (data){
+    console.log(data);
+    var m = data;
+    console.log(data);
     
+    var c = m.waterlevel/10;
+    var level = 0;
+    if(c%5==0){
+      level = 100;
+    }else if(c%3==0){
+      level = 50;
+    }else if(c%2==0){
+      level = 20;
+    }
+    G.setData( updateData(level) );
+    $("#temp").text(m.temp/10+"度");
+    $("#wtemp").text(m.watertemp/10+"度");
+  });
 });
 </script>
 
