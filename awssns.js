@@ -1,6 +1,6 @@
 var AWS = require('aws-sdk');
 const fs = require('fs');
-const region_ = "us-east-2";
+const region_ = "ap-northeast-1";
 try {
   fs.statSync('./aws.json');
   AWS.config.loadFromPath('./aws.json');
