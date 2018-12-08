@@ -14,6 +14,10 @@ router.get('/test', function(req, res, next) {
   res.render('test', { title: 'Express', hostUrl:(process.env.URL || "http://localhost:3000") });
 });
 
+
+router.get('/demoview', function(req, res, next) {
+  res.render('root/demoview', { title: 'Express', hostUrl:(process.env.URL || "http://localhost:3000") });
+});
 router.get('/push', function(req, res, next) {
   res.render('root/push', { title: 'Express', hostUrl:(process.env.URL || "http://localhost:3000") });
 });
